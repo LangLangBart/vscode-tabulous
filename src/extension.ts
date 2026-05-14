@@ -1,70 +1,95 @@
-import { resolve } from "path";
-import { commands, ExtensionContext, Uri, window, workspace } from "vscode";
+/**
+ * @file Tabulous extension entry point
+ */
 
-import common, { loadTerminals } from "./common";
-import { registerContextMenuCommands } from "./contextMenu";
-import { registerSubscriptions } from "./subscriptions";
-import { DefaultTerminal } from "./types";
+import type { ExtensionContext } from 'vscode'
 
-// tslint:disable-next-line: no-var-requires
-const packageJSON: any = require("../package.json");
+import path from 'node:path'
+import { commands, Uri, window, workspace } from 'vscode'
 
-function checkForUpdatedVersion(context: ExtensionContext) {
-    const { version } = packageJSON;
-    const showChangelog = "Show Change Log";
-    const tabulousVersionKey = "TabulousExtensionVersion";
+import type { DefaultTerminal } from './types'
 
-    const storedVersion = context.globalState.get(tabulousVersionKey);
-
-    if (
-        (!storedVersion && version === "1.0.0") ||
-        (storedVersion && version !== storedVersion)
-    ) {
-        window
-            .showInformationMessage(
-                `The Tabulous extension has been updated to version ${version} 🎉`,
-                showChangelog,
-            )
-            .then((choice) => {
-                if (choice === showChangelog) {
-                    commands.executeCommand(
-                        "markdown.showPreview",
-                        Uri.file(resolve(__dirname, "../CHANGELOG.md")),
-                    );
-                }
-            });
-    }
-
-    context.globalState.update(tabulousVersionKey, version);
-}
+import packageJSON from '../package.json' with { type: 'json' }
+import common, { loadTerminals } from './common'
+import { registerContextMenuCommands } from './contextMenu'
+import { StatusBarTerminal } from './statusBarTerminal'
+import { registerSubscriptions } from './subscriptions'
 
 export async function activate(context: ExtensionContext) {
-    try {
-        checkForUpdatedVersion(context);
-        // vscode loves to start a terminal if you previously had one or more open. get rid of it
-        await commands.executeCommand("workbench.action.terminal.kill");
-        const config = workspace.getConfiguration("tabulous");
-        const defaultTerminals = config.get<DefaultTerminal[]>(
-            "defaultTerminals",
-        );
+  try {
+    checkForUpdatedVersion(context)
+    const config = workspace.getConfiguration('tabulous')
+    const defaultTerminals =
+      config.get<DefaultTerminal[]>('defaultTerminals')
 
-        registerContextMenuCommands();
-        registerSubscriptions(context);
+    registerContextMenuCommands()
+    registerSubscriptions(context)
+    await handleExistingTerminals()
 
-        if (defaultTerminals?.length) {
-            try {
-                await loadTerminals(defaultTerminals);
-            } catch {}
-        }
-
-        common.loaded = true;
-    } catch {
-        // can't do anything
+    if (defaultTerminals?.length) {
+      try {
+        await loadTerminals(defaultTerminals)
+      }
+      catch {}
     }
+
+    common.loaded = true
+  }
+  catch {
+    // Can't do anything
+  }
 }
 
 export function deactivate() {
-    common.terminals.forEach(({ terminal }) => {
-        terminal.dispose();
-    });
+  for (const { terminal } of common.terminals.values()) {
+    terminal.dispose()
+  }
+}
+
+function checkForUpdatedVersion(context: ExtensionContext) {
+  const { version } = packageJSON
+  const showChangelog = 'Show Change Log'
+  const tabulousVersionKey = 'TabulousExtensionVersion'
+
+  const storedVersion = context.globalState.get(tabulousVersionKey)
+
+  if (
+    (!storedVersion && version === '1.0.0') ||
+    (storedVersion && version !== storedVersion)
+  ) {
+    window
+      .showInformationMessage(
+        `The Tabulous extension has been updated to version ${version} 🎉`,
+        showChangelog
+      )
+      .then((choice) => {
+        if (choice === showChangelog) {
+          commands.executeCommand(
+            'markdown.showPreview',
+            Uri.file(path.resolve(import.meta.dirname, '../CHANGELOG.md'))
+          )
+        }
+      })
+  }
+
+  context.globalState.update(tabulousVersionKey, version)
+}
+
+async function handleExistingTerminals() {
+  const terminals = window.terminals
+  for (const terminal of terminals) {
+    const terminalID = await terminal.processId
+    if (terminalID && !common.terminals.has(terminalID)) {
+      const _terminal = new StatusBarTerminal({
+        name: terminal.name,
+        show: true,
+        terminal,
+        terminalIndex: common.terminalCount++
+      })
+      common.terminals.set(terminalID, {
+        terminal: _terminal,
+        terminalID
+      })
+    }
+  }
 }

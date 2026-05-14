@@ -1,52 +1,54 @@
 # Tabulous Change Log
 
-* Fixed "Open terminal here" feature by properly registering existing native terminals on startup
-* Opening terminals natively (via context menu or keybind) now registers them in tabulous with the terminal's original name
-* Adopt bun,eslint,.pre-commit-config
-
 ## 1.2.0
+
 * Added support for "Open terminal here". This defaults to setting the terminal title to the closest directory name
-    * Can be open from Explorer context menu
-    ![explorer context menu](images/O2gbG72Pin.gif)
-    * Can be open Editor tab context menu
-    ![editor title context menu](images\Q5SczO7hKU.gif)
-    * Can be open with keybind `Shift+Alt+T`. This opens a terminal from the last active file
-    ![keybind](images/PINogQfPoq.gif)
+  * Can be open from Explorer context menu
+  * Can be open Editor tab context menu
+  * Can be open with keybind `Shift+Alt+T`. This opens a terminal from the last active file
 
 ## 1.1.1
+
 * Fixed grep rename blunder that stopped Touch Bar support from working 🤦
 
 ## 1.1.0
+
 * Added Rename Terminal command. Can be used as a replacement for the built-in rename terminal command (Updates the status bar icon without having to switch terminals)
 * Added support for Touch Bar (macOS):
-    * Create Named Terminal
-    * Rename terminal
-    * Reload default terminals
+  * Create Named Terminal
+  * Rename terminal
+  * Reload default terminals
 
 ## 1.0.3
+
 * Fixed edge-case where it's not possible to create terminal when through a new blank window
 * Now waits for "default terminal reloaded" message before specifying as loaded
 * Made sure terminal exists in the terminals list before trying to dispose it
 
 ## 1.0.2
+
 * Fixed bug where it's not possible to create terminal without workspace, for real this time
 
 ## 1.0.1
+
 * Fixed bug where it's not possible to create terminal without workspace
 
 ## 1.0.0
+
 * Added multi-root workspace support
-    * When creating a new terminal, you will be prompted to choose which workspace folder to open the terminal in
-    * Now possible to use workspace folder name within the `directory` option of `defaultTerminals`
+  * When creating a new terminal, you will be prompted to choose which workspace folder to open the terminal in
+  * Now possible to use workspace folder name within the `directory` option of `defaultTerminals`
 * Relative paths within `directory` option of `defaultTerminals` will now either resolve from the workspace folder, or the workspace file directory if it's a multi-root workspace
 * Shows Change Log prompt when version is updated
 
 ## 0.5.0
+
 * Add tooltips for tabs
 * Create tabs on native terminal creation
 * Track when active terminal changes natively
 
 ## 0.4.0
+
 * Added executeCommand option for default terminals - Makes it possible to pretype the command when the default terminals are opened without actually executing them
 
 ## 0.3.1

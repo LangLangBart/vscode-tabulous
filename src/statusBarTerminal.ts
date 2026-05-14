@@ -1,176 +1,163 @@
-import { existsSync } from "fs";
-import { dirname, isAbsolute, resolve } from "path";
-import {
-    StatusBarAlignment,
-    StatusBarItem,
-    Terminal,
-    window,
-    workspace,
-} from "vscode";
-import common from "./common";
+/**
+ * @file StatusBarTerminal class for managing terminals with status bar integration
+ */
+
+import type { StatusBarItem, Terminal } from 'vscode'
+
+import { existsSync } from 'node:fs'
+import path from 'node:path'
+import { StatusBarAlignment, window, workspace } from 'vscode'
+
+import common from './common'
 
 export interface StatusBarTerminalOptions {
-    /**
-     * Index of the status bar terminal (position on the status bar)
-     */
-    terminalIndex: number;
-    /**
-     * Whether or not to show terminal
-     */
-    show: boolean;
-    /**
-     * Which directory to start the terminal in
-     */
-    cwd?: string;
-    /**
-     * Name of the terminal
-     */
-    name?: string;
-    /**
-     * Reference to the native terminal
-     */
-    terminal?: Terminal;
+  /** Which directory to start the terminal in */
+  cwd?: string
+
+  /** Name of the terminal */
+  name?: string
+
+  /** Whether or not to show terminal */
+  show: boolean
+
+  /** Reference to the native terminal */
+  terminal?: Terminal
+
+  /** Index of the status bar terminal (position on the status bar) */
+  terminalIndex: number
 }
 
 export class StatusBarTerminal {
-    private _item: StatusBarItem;
-    private _showing: boolean = false;
-    private _terminal: Terminal;
+  get name() {
+    return this._terminal.name
+  }
 
-    constructor({
-        terminalIndex,
-        show,
-        name,
-        terminal,
-        cwd,
-    }: StatusBarTerminalOptions) {
-        this._terminal = terminal
-            ? terminal
-            : window.createTerminal({ name, cwd: cwd && this.resolveDir(cwd) });
+  get processId() {
+    return this._terminal.processId
+  }
 
-        this._item = window.createStatusBarItem(StatusBarAlignment.Left, -10);
-        this.setTerminalIndex(terminalIndex, name);
-        this._item.show();
+  private readonly _item: StatusBarItem
 
-        if (show) {
-            this.showTerminal();
+  private _showing = false
+
+  private readonly _terminal: Terminal
+
+  constructor({
+    cwd,
+    name,
+    show,
+    terminal,
+    terminalIndex
+  }: StatusBarTerminalOptions) {
+    this._terminal = terminal ?? window.createTerminal({ cwd: cwd && this.resolveDir(cwd), name })
+
+    this._item = window.createStatusBarItem(StatusBarAlignment.Left, -10)
+    this.setTerminalIndex(terminalIndex, name)
+    this._item.show()
+
+    if (show) {
+      this.showTerminal()
+    }
+  }
+
+  dispose() {
+    this._item.dispose()
+    this._terminal.dispose()
+  }
+
+  hide() {
+    this._showing = false
+    this._item.color = undefined
+    this._item.tooltip = `Show ${this._terminal.name} terminal`
+    this._item.text = `$(terminal) ${this.name}`
+
+    common.activeTerminal = undefined
+  }
+
+  hideTerminal() {
+    this._terminal.hide()
+    this.hide()
+  }
+
+  sendCommand(command: string, execute = true) {
+    this._terminal.sendText(command, execute)
+  }
+
+  setTerimalTitle(name: string) {
+    this._item.text = `$(terminal) ${name}`
+    this._item.tooltip = `Show ${name} terminal`
+  }
+
+  setTerminalIndex(index: number, name?: string) {
+    this.setTerimalTitle(`${name ?? index + 1}`)
+    this._item.command = `tabulous.showTerminal${index + 1}`
+  }
+
+  async show() {
+    const config = workspace.getConfiguration('tabulous')
+    const terminalID = await this._terminal.processId
+    this._showing = true
+    this._item.color = config.get('activeTabColor')
+    this._item.tooltip = `Hide ${this.name} terminal`
+    this._item.text = `$(terminal) ${this.name}`
+
+    common.activeTerminal = terminalID
+  }
+
+  showTerminal() {
+    this._terminal.show()
+    void this.show()
+  }
+
+  toggleTerminal() {
+    this._showing ? this.hideTerminal() : this.showTerminal()
+  }
+
+  private resolveDir(directory?: string) {
+    const { workspaceFile, workspaceFolders } = workspace
+    // There'll definitely be a workspace file if there's more than one workspace folder
+    const workspaceFileDirectory = workspaceFile && path.dirname(workspaceFile.fsPath)
+
+    if (directory) {
+      let cwd: string | undefined
+
+      if (path.isAbsolute(directory)) {
+        cwd = directory
+      }
+      else if (workspaceFolders && workspaceFolders.length > 1) {
+        const matchedWorkspaceFolder = workspaceFolders.find(w => w.name === directory)
+
+        // Matched a workspace folder name, use this dir
+        if (matchedWorkspaceFolder) {
+          cwd = matchedWorkspaceFolder.uri.fsPath
         }
-    }
-
-    get name() {
-        return this._terminal.name;
-    }
-
-    get processId() {
-        return this._terminal.processId;
-    }
-
-    private resolveDir(path?: string) {
-        const { workspaceFile, workspaceFolders } = workspace;
-        // There'll definitely be a workspace file if there's more than one workspace folder
-        const workspaceFileDir = workspaceFile && dirname(workspaceFile.fsPath);
-
-        if (path) {
-            let cwd: string | undefined;
-
-            if (!isAbsolute(path)) {
-                if (workspaceFolders && workspaceFolders.length > 1) {
-                    const matchedWorkspaceFolder = workspaceFolders?.find(
-                        (w) => w.name === path,
-                    );
-
-                    // Matched a workspace folder name, use this dir
-                    if (matchedWorkspaceFolder) {
-                        cwd = matchedWorkspaceFolder.uri.fsPath;
-                    } else {
-                        if (workspaceFileDir) {
-                            // Must be relative to the workspace file dir
-                            cwd = resolve(workspaceFileDir, path);
-                        }
-                    }
-                } else {
-                    if (workspaceFolders) {
-                        // Only one workspace folder, use this as relative dir
-                        cwd = resolve(workspaceFolders[0].uri.fsPath, path);
-                    }
-                }
-            } else {
-                cwd = path;
-            }
-
-            // check to see if this dir actually exists, if not, fall through
-            if (cwd && existsSync(cwd)) {
-                return cwd;
-            }
-
-            window.showWarningMessage(
-                // tslint:disable-next-line: max-line-length
-                `Cannot open terminal for directory/workspace folder name: ${path}. Check to make sure this is correct. Used default location instead`,
-            );
+        else if (workspaceFileDirectory) {
+          // Must be relative to the workspace file dir
+          cwd = path.resolve(workspaceFileDirectory, directory)
         }
+      }
+      else if (workspaceFolders) {
+        // Only one workspace folder, use this as relative dir
+        cwd = path.resolve(workspaceFolders[0].uri.fsPath, directory)
+      }
 
-        // More than one workspace folder, use workspace file dir
-        if (
-            workspace.workspaceFolders &&
-            workspace.workspaceFolders.length > 1
-        ) {
-            return workspaceFileDir;
-        }
+      // Check to see if this dir actually exists, if not, fall through
+      if (cwd && existsSync(cwd)) {
+        return cwd
+      }
 
-        // Use workspace folder dir
-        return workspaceFolders?.[0].uri.fsPath;
+      window.showWarningMessage(`Cannot open terminal for directory/workspace folder name: ${directory}. Check to make sure this is correct. Used default location instead`)
     }
 
-    public showTerminal() {
-        this._terminal.show();
-        this.show();
+    // More than one workspace folder, use workspace file dir
+    if (
+      workspace.workspaceFolders &&
+      workspace.workspaceFolders.length > 1
+    ) {
+      return workspaceFileDirectory
     }
 
-    public hideTerminal() {
-        this._terminal.hide();
-        this.hide();
-    }
-
-    public async show() {
-        const config = workspace.getConfiguration("tabulous");
-        const terminalID = await this._terminal.processId;
-        this._showing = true;
-        this._item.color = config.get("activeTabColor");
-        this._item.tooltip = `Hide ${this.name} terminal`;
-        this._item.text = `$(terminal) ${this.name}`;
-
-        common.activeTerminal = terminalID;
-    }
-
-    public hide() {
-        this._showing = false;
-        this._item.color = undefined;
-        this._item.tooltip = `Show ${this._terminal.name} terminal`;
-        this._item.text = `$(terminal) ${this.name}`;
-
-        common.activeTerminal = undefined;
-    }
-
-    public toggleTerminal() {
-        this._showing ? this.hideTerminal() : this.showTerminal();
-    }
-
-    public setTerimalTitle(name: string) {
-        this._item.text = `$(terminal) ${name}`;
-        this._item.tooltip = `Show ${name} terminal`;
-    }
-
-    public setTerminalIndex(i: number, name?: string) {
-        this.setTerimalTitle(`${name ? name : i + 1}`);
-        this._item.command = `tabulous.showTerminal${i + 1}`;
-    }
-
-    public sendCommand(command: string, execute: boolean = true) {
-        this._terminal.sendText(command, execute);
-    }
-
-    public dispose() {
-        this._item.dispose();
-        this._terminal.dispose();
-    }
+    // Use workspace folder dir
+    return workspaceFolders?.[0].uri.fsPath
+  }
 }

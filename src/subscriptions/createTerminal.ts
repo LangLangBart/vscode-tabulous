@@ -1,51 +1,55 @@
-import { commands, window, workspace } from "vscode";
-import common, { MAX_TERMINALS } from "../common";
-import { StatusBarTerminal } from "../statusBarTerminal";
+/**
+ * @file Create Terminal command registration
+ */
+
+import { commands, window, workspace } from 'vscode'
+
+import common, { MAX_TERMINALS } from '../common'
+import { StatusBarTerminal } from '../statusBarTerminal'
 
 export function createTerminal() {
-    return commands.registerCommand("tabulous.createTerminal", async () => {
-        if (common.terminals.size >= MAX_TERMINALS) {
-            window.showInformationMessage(
-                `This extension does not support more than ${MAX_TERMINALS} terminals.`,
-            );
+  return commands.registerCommand('tabulous.createTerminal', async () => {
+    if (common.terminals.size >= MAX_TERMINALS) {
+      window.showInformationMessage(`This extension does not support more than ${MAX_TERMINALS} terminals.`)
 
-            return;
-        }
+      return
+    }
 
-        try {
-            let cwd: string | undefined;
+    try {
+      let cwd: string | undefined
 
-            if (
-                workspace.workspaceFolders &&
-                workspace.workspaceFolders.length > 1
-            ) {
-                const workspaceFolder = await window.showWorkspaceFolderPick({
-                    placeHolder: "Select working directory for new terminal",
-                });
+      if (
+        workspace.workspaceFolders &&
+        workspace.workspaceFolders.length > 1
+      ) {
+        const workspaceFolder = await window.showWorkspaceFolderPick({
+          placeHolder: 'Select working directory for new terminal'
+        })
 
-                cwd = workspaceFolder?.uri.fsPath;
-            }
+        cwd = workspaceFolder?.uri.fsPath
+      }
 
-            common.terminals.forEach(({ terminal }) => {
-                terminal.hide();
-            });
+      for (const { terminal } of common.terminals.values()) {
+        terminal.hide()
+      }
 
-            const _terminal = new StatusBarTerminal({
-                terminalIndex: common.terminalCount++,
-                show: true,
-                cwd,
-            });
-            const terminalID = await _terminal.processId;
+      const _terminal = new StatusBarTerminal({
+        cwd,
+        show: true,
+        terminalIndex: common.terminalCount++
+      })
+      const terminalID = await _terminal.processId
 
-            if (terminalID) {
-                common.terminals.set(terminalID, {
-                    terminalID,
-                    terminal: _terminal,
-                });
-            }
-        } catch {
-            // nothing we can do
-            window.showErrorMessage("Unable to create terminal");
-        }
-    });
+      if (terminalID) {
+        common.terminals.set(terminalID, {
+          terminal: _terminal,
+          terminalID
+        })
+      }
+    }
+    catch {
+      // Nothing we can do
+      window.showErrorMessage('Unable to create terminal')
+    }
+  })
 }

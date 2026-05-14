@@ -1,15 +1,15 @@
-import { StatusBarTerminal } from "./statusBarTerminal";
+import type { StatusBarTerminal } from './statusBarTerminal'
 
 export interface Common {
-    activeTerminal?: number;
-    loaded: boolean;
-    terminalCount: number;
-    terminals: Map<number, { terminalID: number; terminal: StatusBarTerminal }>;
+  activeTerminal?: number
+  loaded: boolean
+  terminalCount: number
+  terminals: Map<number, { terminal: StatusBarTerminal, terminalID: number }>
 }
 
 export interface DefaultTerminal {
-    name?: string;
-    directory?: string;
-    command?: string;
-    executeCommand?: boolean;
+  command?: string
+  directory?: string
+  executeCommand?: boolean
+  name?: string
 }
