@@ -72,3 +72,26 @@ This extension provides the following settings:
     }]
 }
 ```
+
+---
+
+## Release Process
+
+Fully automated (`.github/workflows/release.yml`):
+
+1. Push triggers `googleapis/release-please-action`
+2. Pull request opens/updates with `CHANGELOG.md`/`package.json` changes based
+   on the Conventional Commits since the last release
+3. When that PR is eventually merged, the workflow builds the package and
+   uploads it to GitHub release
+
+## Build
+
+Ensure `bun` is on your `PATH`, and install dependencies with `bun install`
+
+- [github.com/oven-sh/bun](https://github.com/oven-sh/bun)
+
+```bash
+bun run package
+codium --install-extension tabulous-*.vsix
+```

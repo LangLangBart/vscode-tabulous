@@ -1,5 +1,9 @@
 # Tabulous Change Log
 
+* Fixed "Open terminal here" feature by properly registering existing native terminals on startup
+* Opening terminals natively (via context menu or keybind) now registers them in tabulous with the terminal's original name
+* Adopt bun,eslint,.pre-commit-config
+
 ## 1.2.0
 * Added support for "Open terminal here". This defaults to setting the terminal title to the closest directory name
     * Can be open from Explorer context menu
@@ -37,7 +41,6 @@
 * Relative paths within `directory` option of `defaultTerminals` will now either resolve from the workspace folder, or the workspace file directory if it's a multi-root workspace
 * Shows Change Log prompt when version is updated
 
-
 ## 0.5.0
 * Add tooltips for tabs
 * Create tabs on native terminal creation
@@ -53,7 +56,7 @@
 ## 0.3.0
 
 * Moved subscriptions into their own directory - cleans up extensions.ts
-* Await the disposal of the lingering terminal on startup before doing anything. Hopefully fixes [#4](https://github.com/NitroGhost/vscode-tabulous/issues/4)
+* Await the disposal of the lingering terminal on startup before doing anything.
 * No longer caches config within `StatusBarTerminal` so that `tabulous.activeColor` can be updated without reload
 * Added `tabulous.reloadDefaultTerminals` so that it's possible to dispose of the terminals then reloads the defaults. Good for when the defaults have been updated so that you no longer have to reload VS Code
 * Prefixed commands with "Tabulous: " to better distinguish the commands from others
