@@ -1,5 +1,11 @@
 # Tabulous Change Log
 
+## [2.0.1](https://github.com/LangLangBart/vscode-tabulous/compare/v2.0.0...v2.0.1) (2026-05-16)
+
+### Bug Fixes
+
+* dependabot config for dependency updates ([9f2d3f1](https://github.com/LangLangBart/vscode-tabulous/commit/9f2d3f12c53bbca71ac0ee4469d41eef81476fbb))
+
 ## [2.0.0](https://github.com/LangLangBart/vscode-tabulous/compare/v1.1.1...v2.0.0) (2026-05-16)
 
 ### ⚠ BREAKING CHANGES
