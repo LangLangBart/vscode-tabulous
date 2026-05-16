@@ -1,61 +1,33 @@
 # Tabulous
 
+Adds tabs for each terminal process to the status bar.
+
 ![Tabulous gif](images/tabs.png)
 
-Adds tabs for each terminal process to the status bar. It works by registering
-toggleable status bar buttons when terminals are created via the commands below.
+> Fork of
+> [BenWildeman/vscode-tabulous](https://github.com/BenWildeman/vscode-tabulous)
 
-This extension life cycle:
+| Keybind                           | Description                                                      |
+| --------------------------------- | ---------------------------------------------------------------- |
+| `tabulous.createTerminal`         | Create a terminal with an icon                                   |
+| `tabulous.createNamedTerminal`    | Create a named terminal with an icon (shown in the dropdown)     |
+| `tabulous.renameTerminal`         | Rename the active terminal; replaces the built-in rename command |
+| `tabulous.reloadDefaultTerminals` | Close all terminals and reload from config (no VSCode restart)   |
+| `tabulous.showTerminal1`          | Show the 1st terminal                                            |
+| `tabulous.showTerminal2`          | Show the 2nd terminal                                            |
+| `tabulous.showTerminal3`          | Show the 3rd terminal                                            |
+| `tabulous.showTerminal4`          | Show the 4th terminal                                            |
+| `tabulous.showTerminal5`          | Show the 5th terminal                                            |
+| `tabulous.showTerminal6`          | Show the 6th terminal                                            |
+| `tabulous.showTerminal7`          | Show the 7th terminal                                            |
+| `tabulous.showTerminal8`          | Show the 8th terminal                                            |
+| `tabulous.showTerminal9`          | Show the 9th terminal                                            |
+| `tabulous.showTerminal10`         | Show the 10th terminal                                           |
 
-1. [Tyriar/vscode-terminal-tabs](https://github.com/Tyriar/vscode-terminal-tabs)
-2. [BenWildeman/vscode-terminal-tabs](https://github.com/BenWildeman/vscode-terminal-tabs)
-3. [BenWildeman/vscode-tabulous](https://github.com/BenWildeman/vscode-tabulous)
-4. current fork +v2 => [CHANGELOG](CHANGELOG.md)
-
-## Keybindings
-
-Settings that can be keybound in your `keybindings.json` file:
-
-- `tabulous.createTerminal`: Creates a terminal with an icon
-- `tabulous.createNamedTerminal`: Creates a terminal with an icon that has a
-  name (indicated in the dropdown)
-- `tabulous.renameTerminal`: Rename the active terminal. Replaces the built in
-  terminal rename command
-- `tabulous.reloadDefaultTerminals`: Disposes of all the currently open
-  terminals and reloads your default terminals set within your config. Good for
-  reloading the defaults when they've been changed, without having to close and
-  reopen VS Code
-- `tabulous.showTerminal1`: Shows the first terminal
-- `tabulous.showTerminal2`: Shows the second terminal
-- `tabulous.showTerminal3`: Shows the third terminal
-- `tabulous.showTerminal4`: Shows the fourth terminal
-- `tabulous.showTerminal5`: Shows the fifth terminal
-- `tabulous.showTerminal6`: Shows the sixth terminal
-- `tabulous.showTerminal7`: Shows the seventh terminal
-- `tabulous.showTerminal8`: Shows the eighth terminal
-- `tabulous.showTerminal9`: Shows the ninth terminal
-- `tabulous.showTerminal10`: Shows the tenth terminal
-
-## Available Settings
-
-This extension provides the following settings:
-
-- `tabulous.activeTabColor`: The colour of the active tab. This **must** be a
-  valid css colour
-- `tabulous.touchBar`: Enable touch bar support (macOS only).
-  - **Default:** true
-- `tabulous.createNamedTerminalTouchBarButton`: Enable Create Named Terminal
-  touch bar button.
-  - **Default:** true
-- `tabulous.renameTerminalTouchBarButton`: Enable Rename Terminal touch bar
-  button.
-  - **Default:** true
-- `tabulous.reloadDefaultTerminalsTouchBarButton`: Enable Rename Default
-  Terminals touch bar button.
-  - **Default:** true
-- `tabulous.defaultTerminals`: Default terminal settings for automatically
-  opening terminals when VS Code opens. Best used inside .code-workspace
-  settings
+| Setting                     | Description                                                                               | Default |
+| --------------------------- | ----------------------------------------------------------------------------------------- | ------- |
+| `tabulous.activeTabColor`   | Color of the active tab (must be a valid CSS color)                                       | —       |
+| `tabulous.defaultTerminals` | Default terminals that open when VSCode starts. Best used inside .code-workspace settings | —       |
 
 `tabulous.defaultTerminals` example:
 
@@ -96,23 +68,33 @@ This extension provides the following settings:
 
 ---
 
-## Release Process
+## Contributing
 
-Fully automated (`.github/workflows/release.yml`):
+Checkout the repo, ensure `bun` is on your `PATH`, install dependencies with
+`bun install`, optionally build the package, commit your changes, and send a PR.
 
-1. Push triggers `googleapis/release-please-action`
-2. Pull request opens/updates with `CHANGELOG.md`/`package.json` changes based
-   on the Conventional Commits since the last release
-3. When that PR is eventually merged, the workflow builds the package and
-   uploads it to GitHub release
-
-## Build
-
-Ensure `bun` is on your `PATH`, and install dependencies with `bun install`
+### Build
 
 - [github.com/oven-sh/bun](https://github.com/oven-sh/bun)
 
 ```bash
+bun install
 bun run package
 codium --install-extension tabulous-*.vsix
 ```
+
+## Release Process
+
+Automated with **googleapis/release-please-action**
+
+1. Pushing to `main` triggers `.github/workflows/release.yml`
+2. It opens or updates a release PR that bumps `package.json` and updates
+   `CHANGELOG.md` using Conventional Commits, no need to manually edit them.
+3. When merged, the workflow builds the package and uploads it to GitHub release
+
+## Extension Evolution
+
+1. [Tyriar/vscode-terminal-tabs](https://github.com/Tyriar/vscode-terminal-tabs)
+2. [BenWildeman/vscode-terminal-tabs](https://github.com/BenWildeman/vscode-terminal-tabs)
+3. [BenWildeman/vscode-tabulous](https://github.com/BenWildeman/vscode-tabulous)
+4. Fork +v2 => [CHANGELOG](CHANGELOG.md)

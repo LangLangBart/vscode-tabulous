@@ -2,8 +2,6 @@
 .vscode/
 src/
 
-icons/*.svg
-
 .gitignore
 .pre-commit-config.yaml
 
