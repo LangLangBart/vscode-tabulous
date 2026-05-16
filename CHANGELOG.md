@@ -1,5 +1,21 @@
 # Tabulous Change Log
 
+## [2.0.0](https://github.com/LangLangBart/vscode-tabulous/compare/v1.1.1...v2.0.0) (2026-05-16)
+
+### ⚠ BREAKING CHANGES
+
+* remove touch bar support (macOS)
+
+### Features
+
+* fork repo; fix terminal tab bug; remove legacy configs ([f7d092d](https://github.com/LangLangBart/vscode-tabulous/commit/f7d092defef9773feb0977af67361eef71139e45))
+* release workflow ([a7a2713](https://github.com/LangLangBart/vscode-tabulous/commit/a7a271372494fa1c25145dfa047b822c8f37430d))
+
+### Bug Fixes
+
+* remove touch bar support (macOS) ([59a24e5](https://github.com/LangLangBart/vscode-tabulous/commit/59a24e51e9b7a42e571cafc63d915a35d5aa123b))
+* support markdownlint MD024 ([fddcbff](https://github.com/LangLangBart/vscode-tabulous/commit/fddcbffe8ef974d7771175ebc7c953c171cbf905))
+
 ## 1.2.0
 
 * Added support for "Open terminal here". This defaults to setting the terminal title to the closest directory name
