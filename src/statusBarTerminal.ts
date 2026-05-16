@@ -17,6 +17,9 @@ export interface StatusBarTerminalOptions {
   /** Name of the terminal */
   name?: string
 
+  /** Whether or not to preserve focus when showing */
+  preserveFocus?: boolean
+
   /** Whether or not to show terminal */
   show: boolean
 
@@ -45,6 +48,7 @@ export class StatusBarTerminal {
   constructor({
     cwd,
     name,
+    preserveFocus,
     show,
     terminal,
     terminalIndex
@@ -56,7 +60,7 @@ export class StatusBarTerminal {
     this._item.show()
 
     if (show) {
-      this.showTerminal()
+      this.showTerminal(preserveFocus)
     }
   }
 
@@ -104,8 +108,8 @@ export class StatusBarTerminal {
     common.activeTerminal = terminalID
   }
 
-  showTerminal() {
-    this._terminal.show()
+  showTerminal(preserveFocus?: boolean) {
+    this._terminal.show(preserveFocus)
     void this.show()
   }
 

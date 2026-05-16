@@ -7,7 +7,7 @@ Adds tabs for each terminal process to the status bar.
 > Fork of
 > [BenWildeman/vscode-tabulous](https://github.com/BenWildeman/vscode-tabulous)
 
-| Keybind                           | Description                                                      |
+| Keyboard Shortcut                 | Description                                                      |
 | --------------------------------- | ---------------------------------------------------------------- |
 | `tabulous.createTerminal`         | Create a terminal with an icon                                   |
 | `tabulous.createNamedTerminal`    | Create a named terminal with an icon (shown in the dropdown)     |
@@ -24,10 +24,10 @@ Adds tabs for each terminal process to the status bar.
 | `tabulous.showTerminal9`          | Show the 9th terminal                                            |
 | `tabulous.showTerminal10`         | Show the 10th terminal                                           |
 
-| Setting                     | Description                                                                               | Default |
-| --------------------------- | ----------------------------------------------------------------------------------------- | ------- |
-| `tabulous.activeTabColor`   | Color of the active tab (must be a valid CSS color)                                       | —       |
-| `tabulous.defaultTerminals` | Default terminals that open when VSCode starts. Best used inside .code-workspace settings | —       |
+| Setting                     | Description                                           | Default  |
+| --------------------------- | ----------------------------------------------------- | -------- |
+| `tabulous.activeTabColor`   | Color of the active tab - must be a valid CSS color   | `yellow` |
+| 'tabulous defaultTerminals' | Terminals to open on startup; best in .code-workspace | —        |
 
 `tabulous.defaultTerminals` example:
 
@@ -71,9 +71,7 @@ Adds tabs for each terminal process to the status bar.
 ## Contributing
 
 Checkout the repo, ensure `bun` is on your `PATH`, install dependencies with
-`bun install`, optionally build the package, commit your changes, and send a PR.
-
-### Build
+`bun install`, optionally test the package, commit your changes, and send a PR.
 
 - [github.com/oven-sh/bun](https://github.com/oven-sh/bun)
 
@@ -85,12 +83,12 @@ codium --install-extension tabulous-*.vsix
 
 ## Release Process
 
-Automated with **googleapis/release-please-action**
+Automated with [googleapis/release-please-action](https://github.com/googleapis/release-please-action#how-release-please-works)
 
-1. Pushing to `main` triggers `.github/workflows/release.yml`
-2. It opens or updates a release PR that bumps `package.json` and updates
-   `CHANGELOG.md` using Conventional Commits, no need to manually edit them.
-3. When merged, the workflow builds the package and uploads it to GitHub release
+1. Pushing to `main` triggers `.github/workflows/release.yml`.
+2. The workflow opens or updates a PR that bumps the version in `package.json`
+   and generates a `CHANGELOG.md` from Conventional Commits.
+3. When merged, the workflow builds and distributes the package.
 
 ## Extension Evolution
 

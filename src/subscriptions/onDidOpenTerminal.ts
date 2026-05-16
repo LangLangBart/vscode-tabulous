@@ -19,6 +19,7 @@ export async function onDidOpenTerminal(openedTerminal: Terminal) {
 
     const _terminal = new StatusBarTerminal({
       name: openedTerminal.name,
+      preserveFocus: true,
       show: true,
       terminal: openedTerminal,
       terminalIndex: common.terminalCount++
