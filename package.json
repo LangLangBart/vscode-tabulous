@@ -165,7 +165,7 @@
     "postinstall": "if type pre-commit >/dev/null; then pre-commit install --hook-type commit-msg --hook-type pre-commit; fi"
   },
   "devDependencies": {
-    "@types/vscode": "1.110.0",
+    "@types/vscode": "1.120.0",
     "@vscode/vsce": "^3.9.1",
     "base-ts-config": "github:LangLangBart/base-ts-config"
   }
