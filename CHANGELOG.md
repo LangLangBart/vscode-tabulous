@@ -1,5 +1,12 @@
 # Tabulous Change Log
 
+## [2.0.3](https://github.com/LangLangBart/vscode-tabulous/compare/v2.0.2...v2.0.3) (2026-05-17)
+
+### Bug Fixes
+
+* **package:** exclude all dotfiles ([683961b](https://github.com/LangLangBart/vscode-tabulous/commit/683961b764e14d14eda707fa1d6fa721bc4d027e))
+* register openTerminalHere disposable leak on deactivation ([1190bb0](https://github.com/LangLangBart/vscode-tabulous/commit/1190bb0c822539a8379546716be820f6a1b94014))
+
 ## [2.0.2](https://github.com/LangLangBart/vscode-tabulous/compare/v2.0.1...v2.0.2) (2026-05-16)
 
 ### Bug Fixes
