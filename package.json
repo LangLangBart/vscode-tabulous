@@ -2,7 +2,7 @@
   "publisher": "LangLangBart",
   "name": "tabulous",
   "displayName": "Tabulous - Terminal Tabs (fork)",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Adds tabs for each terminal process to the status bar",
   "author": "LangLangBart",
   "license": "MIT",
