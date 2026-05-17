@@ -27,7 +27,7 @@ Adds tabs for each terminal process to the status bar.
 | Setting                     | Description                                           | Default  |
 | --------------------------- | ----------------------------------------------------- | -------- |
 | `tabulous.activeTabColor`   | Color of the active tab - must be a valid CSS color   | `yellow` |
-| 'tabulous defaultTerminals' | Terminals to open on startup; best in .code-workspace | —        |
+| `tabulous defaultTerminals` | Terminals to open on startup; best in .code-workspace | —        |
 
 `tabulous.defaultTerminals` example:
 
@@ -85,7 +85,7 @@ codium --install-extension tabulous-*.vsix
 
 Automated with [googleapis/release-please-action](https://github.com/googleapis/release-please-action#how-release-please-works)
 
-1. Pushing to `main` triggers `.github/workflows/release.yml`.
+1. Pushing to `main` triggers [release.yml](.github/workflows/release.yml).
 2. The workflow opens or updates a PR that bumps the version in `package.json`
    and generates a `CHANGELOG.md` from Conventional Commits.
 3. When merged, the workflow builds and distributes the package.
