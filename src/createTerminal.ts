@@ -4,8 +4,8 @@
 
 import { commands, window, workspace } from 'vscode'
 
-import common, { MAX_TERMINALS } from '../common'
-import { StatusBarTerminal } from '../statusBarTerminal'
+import common, { MAX_TERMINALS } from './common'
+import { StatusBarTerminal } from './statusBarTerminal'
 
 export function createTerminal() {
   return commands.registerCommand('tabulous.createTerminal', async () => {

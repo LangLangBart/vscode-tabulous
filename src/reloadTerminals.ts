@@ -4,9 +4,9 @@
 
 import { commands, window, workspace } from 'vscode'
 
-import type { DefaultTerminal } from '../types'
+import type { DefaultTerminal } from './types'
 
-import common, { loadTerminals } from '../common'
+import common, { loadTerminals } from './common'
 
 export function reloadTerminals() {
   return commands.registerCommand('tabulous.reloadDefaultTerminals', () => {

@@ -4,7 +4,7 @@
 
 import { commands, window } from 'vscode'
 
-import common from '../common'
+import common from './common'
 
 export function renameTerminal() {
   return commands.registerCommand('tabulous.renameTerminal', async () => {

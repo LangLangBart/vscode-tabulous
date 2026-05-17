@@ -4,7 +4,7 @@
 
 import { commands } from 'vscode'
 
-import common from '../common'
+import common from './common'
 
 export function toggleTerminal(index: number) {
   return commands.registerCommand(`tabulous.showTerminal${index}`, async () => {

@@ -10,10 +10,17 @@ import { commands, Uri, window, workspace } from 'vscode'
 import type { DefaultTerminal } from './types'
 
 import packageJSON from '../package.json' with { type: 'json' }
-import common, { loadTerminals } from './common'
-import { registerContextMenuCommands } from './contextMenu'
+import common, { loadTerminals, MAX_TERMINALS } from './common'
+import { createNamedTerminal } from './createNamedTerminal'
+import { createTerminal } from './createTerminal'
+import { onDidChangeActiveTerminal } from './onDidChangeActiveTerminal'
+import { onDidCloseTerminal } from './onDidCloseTerminal'
+import { onDidOpenTerminal } from './onDidOpenTerminal'
+import { openTerminalHere } from './openTerminalHere'
+import { reloadTerminals } from './reloadTerminals'
+import { renameTerminal } from './renameTerminal'
 import { StatusBarTerminal } from './statusBarTerminal'
-import { registerSubscriptions } from './subscriptions'
+import { toggleTerminal } from './toggleTerminal'
 
 export async function activate(context: ExtensionContext) {
   try {
@@ -22,8 +29,25 @@ export async function activate(context: ExtensionContext) {
     const defaultTerminals =
       config.get<DefaultTerminal[]>('defaultTerminals')
 
-    registerContextMenuCommands()
-    registerSubscriptions(context)
+    context.subscriptions.push(
+      openTerminalHere(),
+      createNamedTerminal(),
+      createTerminal(),
+      renameTerminal(),
+      reloadTerminals(),
+      window.onDidCloseTerminal(onDidCloseTerminal)
+    )
+
+    if ('onDidOpenTerminal' in window) {
+      context.subscriptions.push(window.onDidOpenTerminal(onDidOpenTerminal))
+    }
+
+    context.subscriptions.push(window.onDidChangeActiveTerminal(onDidChangeActiveTerminal))
+
+    for (let index = 1; index <= MAX_TERMINALS; index++) {
+      context.subscriptions.push(toggleTerminal(index))
+    }
+
     await handleExistingTerminals()
 
     if (defaultTerminals?.length) {

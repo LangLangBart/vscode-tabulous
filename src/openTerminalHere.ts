@@ -8,8 +8,8 @@ import { lstatSync } from 'node:fs'
 import path from 'node:path'
 import { commands, window } from 'vscode'
 
-import common, { MAX_TERMINALS } from '../common'
-import { StatusBarTerminal } from '../statusBarTerminal'
+import common, { MAX_TERMINALS } from './common'
+import { StatusBarTerminal } from './statusBarTerminal'
 
 export function openTerminalHere() {
   return commands.registerCommand(

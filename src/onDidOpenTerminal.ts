@@ -4,8 +4,8 @@
 
 import type { Terminal } from 'vscode'
 
-import common from '../common'
-import { StatusBarTerminal } from '../statusBarTerminal'
+import common from './common'
+import { StatusBarTerminal } from './statusBarTerminal'
 
 export async function onDidOpenTerminal(openedTerminal: Terminal) {
   const terminalID = await openedTerminal.processId
