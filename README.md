@@ -71,7 +71,8 @@ Adds tabs for each terminal process to the status bar.
 ## Contributing
 
 Checkout the repo, ensure `bun` is on your `PATH`, install dependencies with
-`bun install`, optionally test the package, commit your changes, and send a PR.
+`bun install`, press **F5** to launch a test window with the extension loaded,
+optionally test the package, commit your changes, and send a PR.
 
 - [github.com/oven-sh/bun](https://github.com/oven-sh/bun)
 
@@ -87,7 +88,10 @@ Automated with [googleapis/release-please-action](https://github.com/googleapis/
 
 1. Pushing to `main` triggers [release.yml](.github/workflows/release.yml).
 2. The workflow opens or updates a PR that bumps the version in `package.json`
-   and generates a `CHANGELOG.md` from Conventional Commits.
+   and generates a `CHANGELOG.md` from
+   [conventionalcommits.org](https://www.conventionalcommits.org). Only `fix:`
+   (patch), `feat:` (minor), and breaking changes trigger a release PR; `chore:`
+   and other non-functional commits are intentionally ignored.
 3. When merged, the workflow builds and distributes the package.
 
 ## Extension Evolution

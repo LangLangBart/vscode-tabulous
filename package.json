@@ -158,7 +158,7 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "bun build ./src/extension.ts --outdir ./out --minify --format=cjs --target=node --external vscode",
+    "vscode:prepublish": "bun build src/extension.ts --outdir=out --minify --format=cjs --target=node --external=vscode",
     "type:check": "tsc --noEmit",
     "lint:fix": "eslint --cache --fix --max-warnings 0",
     "package": "vsce package",

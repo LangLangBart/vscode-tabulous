@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "github.vscode-github-actions",
+    "oven.bun-vscode",
+    // Hovering over nodes shows description, e.g. .markdownlint.yaml
+    "redhat.vscode-yaml"
+  ]
+}

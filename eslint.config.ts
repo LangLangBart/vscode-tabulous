@@ -1,7 +1,3 @@
-/**
- * @file ESLint Setup
- */
-
 import config from 'base-ts-config'
 
 export default config({
