@@ -2,7 +2,7 @@
  * @file Open terminal here context menu command
  */
 
-import type { Uri } from 'vscode'
+import type { Disposable, Uri } from 'vscode'
 
 import { lstatSync } from 'node:fs'
 import path from 'node:path'
@@ -11,7 +11,7 @@ import { commands, window } from 'vscode'
 import common, { MAX_TERMINALS } from './common'
 import { StatusBarTerminal } from './statusBarTerminal'
 
-export function openTerminalHere() {
+export function openTerminalHere(): Disposable {
   return commands.registerCommand(
     'tabulous.openTerminalHere',
     async (context?: Uri) => {

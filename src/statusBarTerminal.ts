@@ -31,11 +31,11 @@ export interface StatusBarTerminalOptions {
 }
 
 export class StatusBarTerminal {
-  get name() {
+  get name(): string {
     return this._terminal.name
   }
 
-  get processId() {
+  get processId(): Thenable<number | undefined> {
     return this._terminal.processId
   }
 
@@ -64,12 +64,12 @@ export class StatusBarTerminal {
     }
   }
 
-  dispose() {
+  dispose(): void {
     this._item.dispose()
     this._terminal.dispose()
   }
 
-  hide() {
+  hide(): void {
     this._showing = false
     this._item.color = undefined
     this._item.tooltip = `Show ${this._terminal.name} terminal`
@@ -78,26 +78,26 @@ export class StatusBarTerminal {
     common.activeTerminal = undefined
   }
 
-  hideTerminal() {
+  hideTerminal(): void {
     this._terminal.hide()
     this.hide()
   }
 
-  sendCommand(command: string, execute = true) {
+  sendCommand(command: string, execute = true): void {
     this._terminal.sendText(command, execute)
   }
 
-  setTerimalTitle(name: string) {
+  setTerimalTitle(name: string): void {
     this._item.text = `$(terminal) ${name}`
     this._item.tooltip = `Show ${name} terminal`
   }
 
-  setTerminalIndex(index: number, name?: string) {
+  setTerminalIndex(index: number, name?: string): void {
     this.setTerimalTitle(`${name ?? index + 1}`)
     this._item.command = `tabulous.showTerminal${index + 1}`
   }
 
-  async show() {
+  async show(): Promise<void> {
     const config = workspace.getConfiguration('tabulous')
     const terminalID = await this._terminal.processId
     this._showing = true
@@ -108,12 +108,12 @@ export class StatusBarTerminal {
     common.activeTerminal = terminalID
   }
 
-  showTerminal(preserveFocus?: boolean) {
+  showTerminal(preserveFocus?: boolean): void {
     this._terminal.show(preserveFocus)
     void this.show()
   }
 
-  toggleTerminal() {
+  toggleTerminal(): void {
     this._showing ? this.hideTerminal() : this.showTerminal()
   }
 

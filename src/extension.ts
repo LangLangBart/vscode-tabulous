@@ -22,7 +22,7 @@ import { renameTerminal } from './renameTerminal'
 import { StatusBarTerminal } from './statusBarTerminal'
 import { toggleTerminal } from './toggleTerminal'
 
-export async function activate(context: ExtensionContext) {
+export async function activate(context: ExtensionContext): Promise<void> {
   try {
     checkForUpdatedVersion(context)
     const config = workspace.getConfiguration('tabulous')
@@ -64,7 +64,7 @@ export async function activate(context: ExtensionContext) {
   }
 }
 
-export function deactivate() {
+export function deactivate(): void {
   for (const { terminal } of common.terminals.values()) {
     terminal.dispose()
   }

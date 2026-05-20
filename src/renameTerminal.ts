@@ -2,11 +2,13 @@
  * @file Rename terminal command registration
  */
 
+import type { Disposable } from 'vscode'
+
 import { commands, window } from 'vscode'
 
 import common from './common'
 
-export function renameTerminal() {
+export function renameTerminal(): Disposable {
   return commands.registerCommand('tabulous.renameTerminal', async () => {
     const { activeTerminal } = common
     try {

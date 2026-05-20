@@ -7,7 +7,7 @@ import type { Terminal } from 'vscode'
 import common from './common'
 import { StatusBarTerminal } from './statusBarTerminal'
 
-export async function onDidOpenTerminal(openedTerminal: Terminal) {
+export async function onDidOpenTerminal(openedTerminal: Terminal): Promise<void> {
   const terminalID = await openedTerminal.processId
   const terminalExists = !!terminalID && common.terminals.has(terminalID)
 

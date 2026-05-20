@@ -17,7 +17,7 @@ const common: Common = {
   >()
 }
 
-export async function loadTerminals(defaultTerminals: DefaultTerminal[]) {
+export async function loadTerminals(defaultTerminals: DefaultTerminal[]): Promise<void> {
   try {
     await Promise.all(defaultTerminals.map(async (terminal) => {
       const {

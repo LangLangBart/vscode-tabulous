@@ -2,12 +2,14 @@
  * @file Create Named Terminal command registration
  */
 
+import type { Disposable } from 'vscode'
+
 import { commands, window, workspace } from 'vscode'
 
 import common, { MAX_TERMINALS } from './common'
 import { StatusBarTerminal } from './statusBarTerminal'
 
-export function createNamedTerminal() {
+export function createNamedTerminal(): Disposable {
   return commands.registerCommand(
     'tabulous.createNamedTerminal',
     async () => {

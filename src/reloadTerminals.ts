@@ -2,13 +2,15 @@
  * @file Reload default terminals command
  */
 
+import type { Disposable } from 'vscode'
+
 import { commands, window, workspace } from 'vscode'
 
 import type { DefaultTerminal } from './types'
 
 import common, { loadTerminals } from './common'
 
-export function reloadTerminals() {
+export function reloadTerminals(): Disposable {
   return commands.registerCommand('tabulous.reloadDefaultTerminals', () => {
     const config = workspace.getConfiguration('tabulous')
     const defaultTerminals = config.get<DefaultTerminal[]>('defaultTerminals')

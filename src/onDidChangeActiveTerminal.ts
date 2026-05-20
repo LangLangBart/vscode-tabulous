@@ -6,7 +6,7 @@ import type { Terminal } from 'vscode'
 
 import common from './common'
 
-export async function onDidChangeActiveTerminal(activeTerminal?: Terminal) {
+export async function onDidChangeActiveTerminal(activeTerminal?: Terminal): Promise<void> {
   if (activeTerminal) {
     const terminalID = await activeTerminal.processId
 

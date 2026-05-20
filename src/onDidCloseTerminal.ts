@@ -6,7 +6,7 @@ import type { Terminal } from 'vscode'
 
 import common from './common'
 
-export async function onDidCloseTerminal(closedTerminal: Terminal) {
+export async function onDidCloseTerminal(closedTerminal: Terminal): Promise<void> {
   const closedTerminalID = await closedTerminal.processId
 
   if (closedTerminalID) {

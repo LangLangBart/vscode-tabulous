@@ -2,11 +2,13 @@
  * @file Toggle terminal command registration
  */
 
+import type { Disposable } from 'vscode'
+
 import { commands } from 'vscode'
 
 import common from './common'
 
-export function toggleTerminal(index: number) {
+export function toggleTerminal(index: number): Disposable {
   return commands.registerCommand(`tabulous.showTerminal${index}`, async () => {
     const _terminal = [...common.terminals.values()][index - 1].terminal
     const terminalID = await _terminal.processId
