@@ -159,7 +159,7 @@
   },
   "scripts": {
     "vscode:prepublish": "bun build src/extension.ts --outdir=out --minify --format=cjs --target=node --external=vscode",
-    "type:check": "tsc --noEmit",
+    "type:check": "tsc --skipLibCheck",
     "lint:fix": "eslint --cache --fix --max-warnings 0",
     "package": "vsce package",
     "postinstall": "if type pre-commit >/dev/null; then pre-commit install --hook-type commit-msg --hook-type pre-commit; fi"

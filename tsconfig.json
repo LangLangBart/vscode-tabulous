@@ -1,9 +1,3 @@
 {
-  "extends": "base-ts-config/tsconfig.json",
-  "compilerOptions": {
-    "rootDir": ".",
-    "outDir": "out",
-    "sourceMap": true,
-    "skipLibCheck": true
-  }
+  "extends": "base-ts-config/tsconfig.json"
 }
