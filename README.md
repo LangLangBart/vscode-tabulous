@@ -7,29 +7,10 @@ Adds tabs for each terminal process to the status bar.
 > Fork of
 > [BenWildeman/vscode-tabulous](https://github.com/BenWildeman/vscode-tabulous)
 
-| Keyboard Shortcut                 | Description                                                      |
-| --------------------------------- | ---------------------------------------------------------------- |
-| `tabulous.createTerminal`         | Create a terminal with an icon                                   |
-| `tabulous.createNamedTerminal`    | Create a named terminal with an icon (shown in the dropdown)     |
-| `tabulous.renameTerminal`         | Rename the active terminal; replaces the built-in rename command |
-| `tabulous.reloadDefaultTerminals` | Close all terminals and reload from config (no VSCode restart)   |
-| `tabulous.showTerminal1`          | Show the 1st terminal                                            |
-| `tabulous.showTerminal2`          | Show the 2nd terminal                                            |
-| `tabulous.showTerminal3`          | Show the 3rd terminal                                            |
-| `tabulous.showTerminal4`          | Show the 4th terminal                                            |
-| `tabulous.showTerminal5`          | Show the 5th terminal                                            |
-| `tabulous.showTerminal6`          | Show the 6th terminal                                            |
-| `tabulous.showTerminal7`          | Show the 7th terminal                                            |
-| `tabulous.showTerminal8`          | Show the 8th terminal                                            |
-| `tabulous.showTerminal9`          | Show the 9th terminal                                            |
-| `tabulous.showTerminal10`         | Show the 10th terminal                                           |
+## Workspace Configuration
 
-| Setting                     | Description                                           | Default  |
-| --------------------------- | ----------------------------------------------------- | -------- |
-| `tabulous.activeTabColor`   | Color of the active tab - must be a valid CSS color   | `yellow` |
-| `tabulous defaultTerminals` | Terminals to open on startup; best in .code-workspace | —        |
-
-`tabulous.defaultTerminals` example:
+Use `tabulous.defaultTerminals` in a `.code-workspace` file to define terminals
+that auto-create on open:
 
 ```jsonc
 {
