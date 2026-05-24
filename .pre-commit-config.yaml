@@ -2,6 +2,7 @@
 # https://pre-commit.com/
 default_stages: [pre-commit]
 fail_fast: true
+
 repos:
   - repo: local
     hooks:
@@ -22,10 +23,18 @@ repos:
         language: system
         pass_filenames: false
         types_or: [ts, tsx, json]
+  - repo: https://github.com/Lucas-C/pre-commit-hooks
+    rev: v1.5.6
+    hooks:
+      - id: remove-tabs
+        args: [--whitespaces-count, '2']
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
       - id: end-of-file-fixer
+      - id: check-json
+        # Some .json files contain useful comments, they shall not be removed
+        exclude: ^(.*tsconfig.*\.json|\.vscode/.*\.json)$
       - id: check-symlinks
       - id: check-yaml
       - id: destroyed-symlinks
@@ -44,7 +53,8 @@ repos:
     rev: v3.14.2
     hooks:
       - id: markdown-link-check
-        args: [--quiet]
+        name: markdown link check
+        args: [--quiet, --alive, '200,429']
         exclude: ^CHANGELOG\.md$
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.48.0
@@ -55,6 +65,7 @@ repos:
     rev: 1.19.1
     hooks:
       - id: yamlfix
+        entry: env YAMLFIX_WHITELINES=1 YAMLFIX_SECTION_WHITELINES=1 yamlfix
   - repo: https://github.com/adhtruong/mirrors-typos
     rev: v1.46.2
     hooks:
