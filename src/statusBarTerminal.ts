@@ -10,7 +10,7 @@ import { StatusBarAlignment, window, workspace } from 'vscode'
 
 import common from './common'
 
-export interface StatusBarTerminalOptions {
+interface StatusBarTerminalOptions {
   /** Which directory to start the terminal in */
   cwd?: string
 

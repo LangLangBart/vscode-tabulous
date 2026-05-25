@@ -69,7 +69,7 @@ Automated with [googleapis/release-please-action](https://github.com/googleapis/
 
 1. Pushing to `main` triggers [release.yml](.github/workflows/release.yml).
 2. The workflow opens or updates a PR that bumps the version in `package.json`
-   and generates a `CHANGELOG.md` from
+   and generates a [CHANGELOG.md](CHANGELOG.md) from
    [conventionalcommits.org](https://www.conventionalcommits.org). Only `fix:`
    (patch), `feat:` (minor), and breaking changes trigger a release PR; `chore:`
    and other non-functional commits are intentionally ignored.
