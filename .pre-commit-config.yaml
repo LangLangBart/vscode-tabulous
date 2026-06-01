@@ -33,12 +33,16 @@ repos:
     rev: v6.0.0
     hooks:
       - id: end-of-file-fixer
+      - id: check-added-large-files
+      - id: check-case-conflict
       - id: check-json
         # Some .json files contain useful comments, they shall not be removed
         exclude: ^(.*tsconfig.*\.json|\.vscode/.*\.json)$
+      - id: check-merge-conflict
       - id: check-symlinks
       - id: check-yaml
       - id: destroyed-symlinks
+      - id: detect-private-key
       - id: trailing-whitespace
   - repo: https://github.com/adhtruong/mirrors-typos
     rev: v1.46.2
@@ -74,6 +78,12 @@ repos:
         name: detect typos in commit message
         args: [--format, brief]
         stages: [commit-msg]
+  - repo: https://github.com/rhysd/actionlint
+    rev: v1.7.12
+    hooks:
+      - id: actionlint
+        additional_dependencies:
+          - github.com/wasilibs/go-shellcheck/cmd/shellcheck@latest
   - repo: https://github.com/jorisroovers/gitlint
     rev: v0.19.1
     hooks:
