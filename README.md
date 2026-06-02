@@ -1,6 +1,7 @@
 # Tabulous
 
-Adds tabs for each terminal process to the status bar.
+A VS Code extension that adds terminal tabs to the status bar and lets you send
+the active file path (absolute or relative) into the terminal.
 
 ![Tabulous gif](images/tabs.png)
 
@@ -9,20 +10,14 @@ Adds tabs for each terminal process to the status bar.
 
 ## Workspace Configuration
 
-Use `tabulous.defaultTerminals` in a `.code-workspace` file to define terminals
-that auto-create on open:
+Use `tabulous.defaultTerminals` to define terminals that auto-create on open:
 
 ```jsonc
+// Example setup for a '*.code-workspace' file
 {
   "folders": [
-    {
-      "path": "relative/to/workspace/file",
-      "name": "Named Workspace"
-    },
-    {
-      "path": "relative/to/workspace/file",
-      "name": "Another Named Workspace"
-    }
+    { "path": "relative/to/workspace/file", "name": "Named Workspace" },
+    { "path": "relative/to/workspace/file", "name": "Another Named Workspace" }
   ],
   "tabulous.defaultTerminals": [{
     "name": "App",

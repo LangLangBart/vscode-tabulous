@@ -128,12 +128,30 @@
       {
         "command": "tabulous.showTerminal10",
         "title": "Tabulous: Show Terminal #10"
+      },
+      {
+        "command": "tabulous.sendAbsolutePath",
+        "title": "Tabulous: Send Absolute File Path"
+      },
+      {
+        "command": "tabulous.sendRelativePath",
+        "title": "Tabulous: Send Relative File Path"
       }
     ],
     "keybindings": [
       {
         "command": "tabulous.openTerminalHere",
-        "key": "Shift+Alt+T"
+        "key": "alt+shift+t"
+      },
+      {
+        "command": "tabulous.sendAbsolutePath",
+        "key": "ctrl+shift+t",
+        "when": "terminalFocus"
+      },
+      {
+        "command": "tabulous.sendRelativePath",
+        "key": "alt+shift+t",
+        "when": "terminalFocus"
       }
     ],
     "menus": {

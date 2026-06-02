@@ -19,6 +19,7 @@ import { onDidOpenTerminal } from './onDidOpenTerminal'
 import { openTerminalHere } from './openTerminalHere'
 import { reloadTerminals } from './reloadTerminals'
 import { renameTerminal } from './renameTerminal'
+import { registerSendFilePathCommands } from './sendFilePath'
 import { StatusBarTerminal } from './statusBarTerminal'
 import { toggleTerminal } from './toggleTerminal'
 
@@ -35,6 +36,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
       createTerminal(),
       renameTerminal(),
       reloadTerminals(),
+      registerSendFilePathCommands(),
       window.onDidCloseTerminal(onDidCloseTerminal)
     )
 
