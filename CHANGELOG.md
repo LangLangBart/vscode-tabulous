@@ -1,5 +1,16 @@
 # Tabulous Change Log
 
+## [2.1.0](https://github.com/LangLangBart/vscode-tabulous/compare/v2.0.3...v2.1.0) (2026-06-09)
+
+### Features
+
+* add commands to send active file paths to terminal ([d785457](https://github.com/LangLangBart/vscode-tabulous/commit/d7854570030c80f607552e9885f976f8d709e7d6))
+
+### Bug Fixes
+
+* add .vscode/launch.json and extensions.json ([35634fb](https://github.com/LangLangBart/vscode-tabulous/commit/35634fb80f3cfdcf60495198e6e0b6fe8ec6c383))
+* **eslint:** explicit-module-boundary-types ([a4f9b5e](https://github.com/LangLangBart/vscode-tabulous/commit/a4f9b5e936987aa48a7a759ea48baaac048181af))
+
 ## [2.0.3](https://github.com/LangLangBart/vscode-tabulous/compare/v2.0.2...v2.0.3) (2026-05-17)
 
 ### Bug Fixes
