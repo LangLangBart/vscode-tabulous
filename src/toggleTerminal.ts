@@ -10,10 +10,10 @@ import common from './common'
 
 export function toggleTerminal(index: number): Disposable {
   return commands.registerCommand(`tabulous.showTerminal${index}`, async () => {
-    const _terminal = [...common.terminals.values()][index - 1].terminal
+    const _terminal = common.terminals.values().toArray()[index - 1].terminal
     const terminalID = await _terminal.processId
 
-    for (const [id, { terminal }] of common.terminals.entries()) {
+    for (const [id, { terminal }] of common.terminals) {
       // Toggle or mark terminal as hidden
       id === terminalID ? terminal.toggleTerminal() : terminal.hide()
     }

@@ -184,7 +184,7 @@
   },
   "devDependencies": {
     "@types/vscode": "1.110.0",
-    "@vscode/vsce": "^3.9.1",
+    "@vscode/vsce": "^4.0.0",
     "base-ts-config": "github:LangLangBart/base-ts-config"
   }
 }

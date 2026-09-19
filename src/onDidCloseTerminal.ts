@@ -17,13 +17,13 @@ export async function onDidCloseTerminal(closedTerminal: Terminal): Promise<void
     }
 
     common.terminalCount--
-    let end = false
-    const terminalIndex = [...common.terminals.values()].findIndex(t => t.terminalID === closedTerminalID)
+    let isEnd = false
+    const terminalIndex = common.terminals.values().toArray().findIndex(t => t.terminalID === closedTerminalID)
     term.terminal.dispose()
     common.terminals.delete(closedTerminalID)
 
     if (terminalIndex === common.terminalCount) {
-      end = true
+      isEnd = true
     }
 
     let index = 0
@@ -33,7 +33,7 @@ export async function onDidCloseTerminal(closedTerminal: Terminal): Promise<void
       // Replicate the native VS Code showing of the next terminal when one is closed
       if (
         common.loaded &&
-        index === (end ? terminalIndex - 1 : terminalIndex)
+        index === (isEnd ? terminalIndex - 1 : terminalIndex)
       ) {
         await terminal.show()
       }

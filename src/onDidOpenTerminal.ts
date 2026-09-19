@@ -9,9 +9,9 @@ import { StatusBarTerminal } from './statusBarTerminal'
 
 export async function onDidOpenTerminal(openedTerminal: Terminal): Promise<void> {
   const terminalID = await openedTerminal.processId
-  const terminalExists = !!terminalID && common.terminals.has(terminalID)
+  const hasTerminal = !!terminalID && common.terminals.has(terminalID)
 
-  if (terminalID && !terminalExists) {
+  if (terminalID && !hasTerminal) {
     for (const { terminal } of common.terminals.values()) {
       await terminal.processId
       terminal.hide()
@@ -19,7 +19,7 @@ export async function onDidOpenTerminal(openedTerminal: Terminal): Promise<void>
 
     const _terminal = new StatusBarTerminal({
       name: openedTerminal.name,
-      preserveFocus: true,
+      shouldPreserveFocus: true,
       show: true,
       terminal: openedTerminal,
       terminalIndex: common.terminalCount++

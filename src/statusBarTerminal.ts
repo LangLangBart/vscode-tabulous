@@ -18,7 +18,7 @@ interface StatusBarTerminalOptions {
   name?: string
 
   /** Whether or not to preserve focus when showing */
-  preserveFocus?: boolean
+  shouldPreserveFocus?: boolean
 
   /** Whether or not to show terminal */
   show: boolean
@@ -48,7 +48,7 @@ export class StatusBarTerminal {
   constructor({
     cwd,
     name,
-    preserveFocus,
+    shouldPreserveFocus,
     show,
     terminal,
     terminalIndex
@@ -60,7 +60,7 @@ export class StatusBarTerminal {
     this._item.show()
 
     if (show) {
-      this.showTerminal(preserveFocus)
+      this.showTerminal(shouldPreserveFocus)
     }
   }
 
@@ -83,8 +83,8 @@ export class StatusBarTerminal {
     this.hide()
   }
 
-  sendCommand(command: string, execute = true): void {
-    this._terminal.sendText(command, execute)
+  sendCommand(command: string, shouldExecute = true): void {
+    this._terminal.sendText(command, shouldExecute)
   }
 
   setTerimalTitle(name: string): void {
@@ -93,7 +93,7 @@ export class StatusBarTerminal {
   }
 
   setTerminalIndex(index: number, name?: string): void {
-    this.setTerimalTitle(`${name ?? index + 1}`)
+    this.setTerimalTitle(name ?? String(index + 1))
     this._item.command = `tabulous.showTerminal${index + 1}`
   }
 
@@ -108,8 +108,8 @@ export class StatusBarTerminal {
     common.activeTerminal = terminalID
   }
 
-  showTerminal(preserveFocus?: boolean): void {
-    this._terminal.show(preserveFocus)
+  showTerminal(shouldPreserveFocus?: boolean): void {
+    this._terminal.show(shouldPreserveFocus)
     void this.show()
   }
 
