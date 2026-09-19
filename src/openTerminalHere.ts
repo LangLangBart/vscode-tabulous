@@ -18,16 +18,16 @@ export function openTerminalHere(): Disposable {
       const uri = context?.fsPath ?? window.activeTextEditor?.document.uri.fsPath
 
       if (uri) {
+        if (common.terminals.size >= MAX_TERMINALS) {
+          window.showInformationMessage(`This extension does not support more than ${MAX_TERMINALS} terminals.`)
+          return
+        }
+
         const stat = lstatSync(uri)
         const directoryPath = stat.isDirectory() ? uri : path.dirname(uri)
         const directoryName = stat.isDirectory() ?
             path.basename(uri) :
             path.basename(path.dirname(uri))
-
-        if (common.terminals.size >= MAX_TERMINALS) {
-          window.showInformationMessage(`This extension does not support more than ${MAX_TERMINALS} terminals.`)
-          return
-        }
 
         try {
           for (const { terminal } of common.terminals.values()) {

@@ -108,7 +108,7 @@ async function handleExistingTerminals() {
     if (terminalID && !common.terminals.has(terminalID)) {
       const _terminal = new StatusBarTerminal({
         name: terminal.name,
-        preserveFocus: true,
+        shouldPreserveFocus: true,
         show: true,
         terminal,
         terminalIndex: common.terminalCount++

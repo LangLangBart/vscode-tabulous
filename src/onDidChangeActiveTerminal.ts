@@ -7,11 +7,13 @@ import type { Terminal } from 'vscode'
 import common from './common'
 
 export async function onDidChangeActiveTerminal(activeTerminal?: Terminal): Promise<void> {
-  if (activeTerminal) {
-    const terminalID = await activeTerminal.processId
+  if (!activeTerminal) {
+    return
+  }
 
-    for (const [id, { terminal }] of common.terminals.entries()) {
-      await (id === terminalID ? terminal.show() : terminal.hide())
-    }
+  const terminalID = await activeTerminal.processId
+
+  for (const [id, { terminal }] of common.terminals) {
+    await (id === terminalID ? terminal.show() : terminal.hide())
   }
 }
