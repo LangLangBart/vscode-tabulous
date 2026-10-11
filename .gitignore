@@ -1,7 +1,15 @@
+# Cache
 .eslintcache
-out/
+
+# Dependency directories
 node_modules/
-package-lock.json
-yarn.lock
-bun.lock*
+
+# Dotenv environment variables file
+.env
+
+# Keep vscode settings synced
+!.vscode
+
+# Custom files
+out/
 *.vsix

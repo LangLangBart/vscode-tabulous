@@ -178,7 +178,7 @@
   "scripts": {
     "lint:fix": "eslint --cache --fix --max-warnings 0",
     "package": "vsce package",
-    "prepare": "if type pre-commit >/dev/null; then pre-commit install; fi",
+    "prepare": "pre-commit install 2>/dev/null || true",
     "type:check": "tsc --skipLibCheck",
     "vscode:prepublish": "bun build src/extension.ts --outdir=out --minify --format=cjs --target=node --external=vscode"
   },
